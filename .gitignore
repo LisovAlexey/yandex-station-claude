@@ -1,0 +1,12 @@
+# Local configuration — copy config.env.example to config.env and fill it in.
+config.env
+*.env
+
+# Build artifacts and cloned sources (produced by scripts/build.sh).
+dist/
+build/
+
+# Never commit secrets, tokens, certificates or device backups.
+*.key
+*.pem
+*.crt

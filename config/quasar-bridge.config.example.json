@@ -1,0 +1,23 @@
+{
+  "_comment": "Example quasar-bridge config. Copy to the Station at $BRIDGE_STATE/config.json and edit. Replace llm_base_url with your PROXY_URL. The API key goes in runtime.env (QUASAR_LLM_API_KEY), never here.",
+  "listen": "127.0.0.1:8443",
+  "mode": "hybrid",
+  "tls_cert": "",
+  "tls_key": "",
+  "allowed_ips": ["127.0.0.1", "::1"],
+  "llm_base_url": "https://YOUR_PROXY_HOST/v1",
+  "llm_model": "sonnet",
+  "llm_api": "chat_completions",
+  "local_progress": { "enabled": true },
+  "listen_after_reply": true,
+  "dialogue_context": { "enabled": true, "ttl_seconds": 300, "max_turns": 6, "max_chars": 12000 },
+  "routing": {
+    "rules": [
+      { "name": "explicit_llm", "route": "llm", "match": { "starts_with_any": ["спроси нейросеть", "клод", "claude"] } },
+      { "name": "cloud_services", "route": "yandex", "match": { "contains_any": ["погода", "таймер", "будильник"] } }
+    ],
+    "default_route": "classify",
+    "classifier": { "timeout_ms": 8000, "on_error": "yandex" },
+    "refusal": { "enabled": true }
+  }
+}
